@@ -17,12 +17,22 @@ function HomePage(props) {
 // fetches and exposes data through props to the component function
 // can do server side things
 // can use credentials that users shouldn't see
-export async function getStaticProps() {
+export async function getStaticProps(context) {
   console.log("Re-generating");
   const filePath = path.join(process.cwd(), "data", "dummy-backend.json"); // cwd is treats all files as being in the root directory
   const jsonData = await fs.readFile(filePath);
   const data = JSON.parse(jsonData);
 
+  if (!data) {
+    return {
+      redirect: {
+        destination: "/no-data",
+      },
+    };
+  }
+  if (data.products.length === 0) {
+    return { notFOund: true };
+  }
   return {
     props: {
       products: data.products,
