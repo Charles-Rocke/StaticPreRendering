@@ -18,6 +18,7 @@ function HomePage(props) {
 // can do server side things
 // can use credentials that users shouldn't see
 export async function getStaticProps() {
+  console.log("Re-generating");
   const filePath = path.join(process.cwd(), "data", "dummy-backend.json"); // cwd is treats all files as being in the root directory
   const jsonData = await fs.readFile(filePath);
   const data = JSON.parse(jsonData);
@@ -26,6 +27,7 @@ export async function getStaticProps() {
     props: {
       products: data.products,
     },
+    revalidate: 10,
   };
 }
 export default HomePage;
