@@ -3,6 +3,11 @@ import path from "path";
 
 function ProductDetailPage(props) {
   const { loadedProduct } = props;
+
+  // if fallback: true, then do below, else if "blocking" I won't need below
+  // if (!loadedProduct) {
+  //   return <p>Loading...</p>;
+  // }
   return (
     <>
       <h1>{loadedProduct.title}</h1>
@@ -32,12 +37,8 @@ export async function getStaticProps(context) {
 // this tells Next that these 3 paths should be pre-generated with the 3 values below (p1, p2, p3)
 export async function getStaticPaths() {
   return {
-    paths: [
-      { params: { pid: "p1" } },
-      { params: { pid: "p2" } },
-      { params: { pid: "p3" } },
-    ],
-    fallback: false,
+    paths: [{ params: { pid: "p1" } }],
+    fallback: "blocking",
   };
 }
 
