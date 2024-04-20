@@ -1,6 +1,5 @@
 import fs from "fs/promises";
 import path from "path";
-import { getStaticProps } from ".";
 
 function ProductDetailPage(props) {
   const { loadedProduct } = props;
@@ -27,6 +26,18 @@ export async function getStaticProps(context) {
     props: {
       loadedProduct: product,
     },
+  };
+}
+
+// this tells Next that these 3 paths should be pre-generated with the 3 values below (p1, p2, p3)
+export async function getStaticPaths() {
+  return {
+    paths: [
+      { params: { pid: "p1" } },
+      { params: { pid: "p2" } },
+      { params: { pid: "p3" } },
+    ],
+    fallback: false,
   };
 }
 
